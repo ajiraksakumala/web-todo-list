@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <title>Do It Later</title>
+</head>
+<body>
+    <div class="container">
+            <div class="header row">
+                <div class="col-xs-12 col-md-2">
+                    <span class="text-right">Do It Later</span>
+                </div>
+                <div class="col-md-10">
+                    <form id="formSubmit">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-5">
+                                <input id="textInp" placeholder="Masukan Daftar Kegiatan" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" type="text" required/>
+                            </div>
+                            <div class="col-xs-12 col-md-5">
+                                <button id="btnInp" type="submit" class="btn btn-outline-light">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12">
+                    <span id="count">0</span>
+                    <span>Todo</span>
+                </div>
+            </div>
+            <div class="list row">
+                <div class="list-col col">
+                    <ul id="list" class="list-group list-group-flush">
+                    </ul>
+                </div>
+            </div>
+        </div>
+<script>
+    let todos = [];
+    const list = document.getElementById("list");
+    const btnInp = document.getElementById("btnInp");
+    const textInp = document.getElementById("textInp");
+    const countTodo = document.getElementById("count");
+    let count = 0;
+
+    const data = JSON.parse(localStorage.getItem("todos"));
+    // console.log(data);
+    if(data != null) {
+        todos = data;
+    }
+
+    function render() {
+        let index = 0;
+        list.innerHTML = "";
+        count = todos.length;
+        if (todos != null) {
+            while(index < todos.length) {
+                if (todos[index].status == true) {
+                    count -= 1;
+                    list.innerHTML += '<li class="list-group list-group-item"><div class="row"><div class="col-9 col-md-6 text-justify"><input type="checkbox" class="form-check-input" onChange="status('+ index +')" checked/><strong> ' + todos[index].event + '</strong></div><div class="col-3 col-md-6 text-right">' + '<button onclick="del('+ index +')" class="btn btn-inp">Delete</button></div></div></li>'     
+                } else {
+                    list.innerHTML += '<li class="list-group list-group-item"><div class="row"><div class="col-9 col-md-6 text-justify"><input type="checkbox" class="form-check-input" onChange="status('+ index +')"/> ' + todos[index].event + '</div><div class="col-3 col-md-6 text-right">' + '<button onclick="del('+ index +')" class="btn btn-inp">Delete</button></div></div></li>'     
+                }
+                index++
+            }
+            countTodo.innerHTML = count;
+            textInp.value = "";
+        }
+    }
+
+    function status(index) {
+        todos[index].status == false ? todos[index].status = true : todos[index].status = false;
+        localStorage.setItem("todos", JSON.stringify(todos));
+        render();
+    }
+
+    function del(key) {
+        todos.splice(key, 1)
+        localStorage.setItem("todos", JSON.stringify(todos));
+        render();
+    }
+
+    render()
+
+    formSubmit.addEventListener('submit', function() {
+        const todo = {
+            'event' : textInp.value,
+            'status' : false
+        }
+        todos.push(todo);
+        render();
+        localStorage.setItem("todos", JSON.stringify(todos));
+    })
+
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+.header {
+    margin: 1rem 0;
+    padding: 1rem 0;
+    background-color: #7547B3;
+}
+#textInp {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.btn-inp {
+    background-color: #7547B3;
+    color: white
+}
+.list {
+    margin: 1rem 0;
+}
+.list-col {
+    padding: 0;
+}
+.list-group.list-group-item {
+    border-left: #7547B3 solid 5px;
+    margin-top: 6px;
+}
+span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    font-size: 23px;
+    color: whitesmoke;
+}
+@media only screen and (max-width: 768px) {
+    .header {
+        text-align: center;
+    }
+  }
+  
